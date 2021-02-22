@@ -1,0 +1,29 @@
+<html>
+<head>
+  <title>Tryk på knappen</title>
+</head>
+<body>
+  
+  <button onclick="run()">Kør koden!</button>
+  <br/>
+  <textarea id="output" rows="20" cols="80">
+  </textarea>
+
+  <script>
+    let array = [1,2,3,4,5];
+
+    function run() {
+      // TODO: Herunder skal du skriv din egen kode!
+
+      let a = [];
+      for (let tal of array) {
+        a.push(tal * 2);
+      }
+
+      // Her indsættes tekst i tagget med id "output"
+      document.getElementById("output").textContent = "hejsa";
+    }
+  </script>
+
+</body>
+</html>
