@@ -4,25 +4,42 @@
 </head>
 <body>
   
-  <button onclick="run()">Kør koden!</button>
+  <button onclick="run()">Start programmet!</button>
   <br/>
-  <textarea id="output" rows="20" cols="80">
-  </textarea>
+  <h3>Output:</h3>
+  <textarea id="output" rows="20" cols="80"></textarea>
 
   <script>
-    let array = [1,2,3,4,5];
 
     function run() {
-      // TODO: Herunder skal du skriv din egen kode!
+      let output = "hejsa\n";
 
-      let a = [];
-      for (let tal of array) {
-        a.push(tal * 2);
+      // *** Eksempler *** //
+
+      // En simpel funktion
+      function sum(a,b) {
+        return a + b;
       }
+      // Funktionens "return value" tilføjes til "output"
+      output = output + "2 + 2 er " + sum(2,2);
 
-      // Her indsættes tekst i tagget med id "output"
-      document.getElementById("output").textContent = "hejsa";
+
+
+      // *** Skriv din egen kode herunder! *** //
+
+
+
+
+
+
+
+
+      // Her sættes output ind på siden:
+      document.getElementById("output").value = output;
+      // Til de nysgerrige, så kan du se dokumentationen for "document.getElementById(id)" her:
+      // https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById
     }
+    
   </script>
 
 </body>

@@ -5,18 +5,38 @@
 </head>
 <body>
   
-  <button onclick="run()">Kør koden!</button>
+  <button onclick="run()">Start programmet!</button>
   <br/>
-  <textarea id="output" rows="20" cols="80">
-  </textarea>
+  <h3>Output:</h3>
+  <textarea id="output" rows="20" cols="80"></textarea>
 
   <script>
     function run() {
-      console.log(jeopardy[0]);
-      
+      let output = "hejsa\n";
 
-      // Her indsættes tekst i tagget med id "output"
-      document.getElementById("output").textContent = jeopardy[0].category;
+      
+      // *** Eksempler *** //
+
+      // Returner første Jeopardy-spørgsmål
+      function hentFørsteSpørgsmål() {
+        return jeopardy[0].question;
+      }
+
+      // Returner første jeopardy-svar
+      function hentFørsteSvar() {
+        return jeopardy[0].answer;
+      }
+      // Funktionens "return value" tilføjes til "output"
+      output = "Question: " + hentFørsteSpørgsmål() + "\nAnswer: " + hentFørsteSvar();
+
+
+
+
+
+      // Her sættes output ind på siden:
+      document.getElementById("output").value = output;
+      // Til de nysgerrige, så kan du se dokumentationen for "document.getElementById(id)" her:
+      // https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById
     }
   </script>
 

@@ -1,0 +1,29 @@
+<html>
+<head>
+  <title>Jeopardy data</title>
+  <script src="script.js"></script>
+</head>
+<body>
+  
+  <button onclick="run()">Tegn billede!</button>
+  <br/>
+  <h3>Grafik:</h3>
+  <svg id="grafik" width="500" height="500" style="border: 2px solid black"></svg>
+
+
+  <script>
+    function run() {
+
+      // *** Eksempler *** //
+
+      for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+          drawCircle(25 + i * 50, 25 + j * 50, 20, "green");
+        }
+      }
+
+    }
+  </script>
+
+</body>
+</html>
