@@ -1,0 +1,84 @@
+<html>
+<head>
+  <title>Tryk på knappen</title>
+</head>
+<body>
+  
+  <button onclick="run()">Start programmet!</button>
+  <br/>
+  <h3>Output:</h3>
+  <textarea id="output" rows="20" cols="80"></textarea>
+
+  <script>
+    /*
+1. En funktion der lægger tre tal sammen, returnerer deres sum.
+
+2. Endnu en funktion der tager tre tal som input. Funktionen skal returnerer true hvis alle tallene til sammen er over 100, ellers false.
+
+3. En funktion der tager en tekst som input (navn), og returnerer teksten “Hejsa, navn”, hvor navn lig med input.
+
+4. En funktion der tager to stykker tekst, og returnerer deres to forbogstaver sat sammen. Fx hvis input er “kat” og “hund”, skal return value være “kh”. Du kan bruge string-metoden charAt.
+
+5. En funktion der tager to input: et tal og en tekst. Funktionen skal afgøre om teksten er længere end tallet, og returnerer true eller false.
+    */
+
+    function run() {
+      let output = "hejsa\n";
+
+      // *** Eksempler *** //
+
+      // En simpel funktion
+      function sum(a, b) {
+        return a + b;
+      }
+      // Funktionens "return value" tilføjes til "output"
+      output = output + "2 + 2 er " + sum(2,2);
+
+
+
+      // *** Skriv din egen kode herunder! *** //
+      function sum3(a, b, c) {
+        return a + b + c;
+      }
+      output = output + "\n" + sum3(5, 5, 10);
+
+      function erOver100(a, b, c) {
+        let i = sum(a, b, c);
+        //let i = a + b + c;
+        /*
+        if (i > 100) {
+          return true;
+        } else {
+          return false;
+        }
+        */
+        return i > 100;
+      }
+      output = output + "\nEr 50 + 50 + 50 over 100? " + erOver100(50, 50, 50);
+
+
+      function hejsa(name) {
+        return "Hejsa, " + name;
+      }
+      output = output + "\n" + hejsa("Kristian");
+
+
+      function forbogstaver(tekst1, tekst2) {
+        let c1 = tekst1.charAt(0);
+        let c2 = tekst2.charAt(0);
+        return c1 + c2;
+      }
+
+      output = output + "\n" + forbogstaver("kat", "hund");
+
+
+      // Her sættes output ind på siden:
+      document.getElementById("output").value = output;
+      // Til de nysgerrige, så kan du se dokumentationen for "document.getElementById(id)" her:
+      // https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById
+    }
+    
+  </script>
+
+</body>
+</html>
