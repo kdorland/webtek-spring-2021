@@ -1,0 +1,24 @@
+<html>
+<head>
+  <title>opgave 6.4</title>
+  <script src="script.js"></script>
+</head>
+<body> 
+
+  <svg id="grafik" width="800" height="800" style="border: 2px solid black"></svg>
+
+  <script>
+    let offsetX = 0;
+    let offsetY = 0;
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        drawBox(100 + (j * 200), 0 + offsetY, 100, 100, "black");
+        drawBox(0 + offsetX, 100 + offsetY, 100, 100, "black");
+        offsetX = offsetX + 200;
+      }
+      offsetX = 0;
+      offsetY = offsetY + 200;
+    }
+  </script>
+</body>
+</html>
