@@ -1,0 +1,68 @@
+<html>
+<head>
+  <title>Jeopardy data</title>
+  <script src="script.js"></script>
+</head>
+<body>
+  
+  <button onclick="run()">Start programmet!</button>
+  <br/>
+  <h3>Output:</h3>
+  <textarea id="output" rows="20" cols="80"></textarea>
+
+  <script>
+    function run() {
+      let output = "";
+
+      
+      // *** Eksempler *** //
+
+      // Returner første Jeopardy-spørgsmål
+      function hentFørsteSpørgsmål() {
+        return jeopardy[0].question;
+      }
+
+      // Returner første jeopardy-svar
+      function hentFørsteSvar() {
+        return jeopardy[0].answer;
+      }
+      // Funktionens "return value" tilføjes til "output"
+      //output = "Question: " + hentFørsteSpørgsmål() + "\nAnswer: " + hentFørsteSvar();
+
+
+      // Opgave 1
+      // En funktion der returnerer kategorierne for de første 50 spørgsmål.
+      function opgave41(antal) {
+        let result = [];
+        for (let i = 0; i < antal; i++) {
+          result.push(jeopardy[i].category);
+        }
+        return result;
+      }
+      output = output + opgave41(50) + "\n";
+
+
+      // Opgave 2
+      // En funktion der tager en input-værdi (tekst), og returnerer alle kategorier hvori input-teksten indgå i kategoriens navn.
+      function opgave42(tekst) {
+        let result = [];
+
+        for (let q of jeopardy) {
+          if (q.category.toLowerCase().includes(tekst.toLowerCase())) {
+            result.push(q.category);
+          }
+        }
+
+        return result;
+      }
+      output = output + opgave42("soccer") + "\n";
+
+      // Her sættes output ind på siden:
+      document.getElementById("output").value = output;
+      // Til de nysgerrige, så kan du se dokumentationen for "document.getElementById(id)" her:
+      // https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById
+    }
+  </script>
+
+</body>
+</html>

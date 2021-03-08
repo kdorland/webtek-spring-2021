@@ -1,0 +1,77 @@
+<html>
+<head>
+  <title>Tryk på knappen</title>
+</head>
+<body>
+  
+  <button onclick="run()">Start programmet!</button>
+  <br/>
+  <h3>Output:</h3>
+  <textarea id="output" rows="20" cols="80"></textarea>
+
+  <script>
+
+    function run() {
+      let output = "";
+
+      // 1. En funktion der tager et array med tekst som input. Output skal være et nyt array hvor alle string-elementer længere end fem tegn er sorteret fra.
+
+      function opgave31(input) {
+        let result = [];
+        for (let s of input) {
+          // https://www.w3schools.com/jsref/jsref_length_string.asp
+          if (s.length < 6) {
+            result.push(s);
+          }
+        }
+        return result;
+      }
+
+      let inputArray = ["hej", "banan", "pandekager", "kage"];
+      output = output + opgave31(inputArray) + "\n";
+
+
+      // 2. En funktion der tager to arrays, og laver et nyt langt array hvor elementer fra de to arrays er sat sammen.
+      function opgave32(input1, input2) {
+        let result = [];
+
+        for (let i of input1) {
+          result.push(i);
+        }
+
+        for (let i of input2) {
+          result.push(i);
+        }
+
+        return result;
+      }
+
+      let inputArray1 = [1,2,3,4];
+      let inputArray2 = [5,6,7,8];
+      output = output + opgave32(inputArray1, inputArray2) + "\n";
+
+      
+      // 3. En funktion der tager to arrays med tal (samme længde). Output skal være et nyt array hvor tallene fra de to arrays er lagt sammen parvis (dvs. tal 1 fra array 1 lagt sammen med tal 1 fra array 2, osv).
+      function opgave33(input1, input2) {
+        let result = [];
+
+        for (let i = 0; i < input1.length; i++) {
+          result.push(input1[i] + input2[i]);
+        }
+
+        return result;
+      }
+
+      inputArray1 = [1,2,3,4];
+      inputArray2 = [5,6,7,8];
+      // Output bør være: [6, 8, 10, 12]
+      output = output + opgave33(inputArray1, inputArray2);
+
+      
+      document.getElementById("output").value = output;
+    }
+    
+  </script>
+
+</body>
+</html>
