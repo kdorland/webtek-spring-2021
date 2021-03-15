@@ -1,0 +1,90 @@
+<html>
+
+<head>
+	<title>D3-eksempel</title>
+	<script type="text/javascript" src="d3.js"></script>
+</head>
+
+<body>
+	<script type="text/javascript">
+		// Nu henter vi data
+		d3.json("JEOPARDY_QUESTIONS.json").then(function (data) {
+			console.log("Der er hentet data:");
+			console.log(data);
+
+			// Opsamling af årstal
+			let years = [];
+			for (let question of data) {
+				// Eksempel: air_date: "2004-12-31"
+				const year = parseInt(question.air_date.substring(0,4));
+				if (years.includes(year)) {
+					// Gør ingeting, året er allerede i arrayet
+				} else {
+					years.push(year);
+				}
+			}
+			years.sort();
+			console.log(years);
+			/* Output:
+["1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012"]
+			*/
+
+			// Dataopsamling i et array.
+			// Vi samler værdier for: "war", "peace", "love", "hate"
+			let opsamling = [];
+			for (let year of years) {
+				opsamling.push(0);
+			}
+
+			// Dataopsamling med et for loop
+			for (let i = 0; i < years.length; i++) {
+				for (let question of data) {
+					if (question.air_date.toLowerCase().includes(years[i])) {
+						opsamling[i] = opsamling[i] + 1;
+					} 
+				}
+			}
+			
+			console.log("Resultat af dataopsamling", opsamling);
+
+			// Width and height
+			const w = 700;
+			const h = 500;
+			const barPadding = 1;
+
+			// scale til y-aksen
+			const yScale = d3.scaleLinear()
+				.domain([0, d3.max(opsamling)])
+				.range([0, h])
+
+			console.log("d3.max(opsamling)", d3.max(opsamling));
+			console.log("opsamling[0]", opsamling[0]);
+			console.log("yScale", yScale(opsamling[0]));
+
+			// Create SVG element
+			const svg = d3.select("body")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
+
+			// TODO: Lav visualiseringen her! (fx barchart)
+			svg.selectAll("rect")
+			   .data(opsamling)
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return i * (w / opsamling.length);
+			   })
+			   .attr("y", function(d) {
+			   		return h - yScale(d);
+			   })
+			   .attr("width", w / opsamling.length - barPadding)
+			   .attr("height", function(d) {
+			   		return yScale(d);
+			   })
+			   .attr("fill", "teal");
+		});
+	</script>
+</body>
+
+</html>
