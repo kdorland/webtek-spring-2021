@@ -20,7 +20,7 @@
     // Scale-funktioner
     const yScale = d3.scaleLinear() // Linæer skalering
       .domain([0, d3.max(dataset)]) // Input er fra 0 til største værdi i dataset
-      .range([bottomPadding, h]) // Ouput er fra bottomPadding til højden af SVG
+      .range([0, h - bottomPadding]) // Ouput fra 0 til højden - fratrukket lidt luft til aksen
 
     const xScale = d3.scaleLinear() // Linæer skalering
       .domain([0, dataset.length]) // Input er fra 0 til antallet af tal i alt
