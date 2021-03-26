@@ -1,0 +1,90 @@
+<html>
+
+<head>
+  <title>Aarhus Covid-19</title>
+  <script type="text/javascript" src="d3.js"></script>
+
+  <style type="text/css">
+    .line {
+      fill: rgb(233, 178, 61);
+      stroke: rgb(153, 49, 8);
+      stroke-width: 1.1;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Covid-19 i Aarhus Kommune</h1>
+
+  <script>
+  // Width and height
+  const w = 900;
+  const h = 400;
+  const padding = 40;
+
+  let dataset, xScale, yScale, xAxis, yAxis, line;  // Empty, for now
+
+  // For converting Dates to strings
+  const formatTime = d3.timeFormat("%Y-%m");
+
+  const rowConverter = function(row) {
+    return {
+      date: new Date(row.date),
+      count: parseInt(row.count)
+    };
+  }
+
+  // Load in data
+  d3.csv("smittetal-aarhus.csv", rowConverter).then(function(data) {
+    const dataset = data;
+    console.log(dataset);
+
+    // Create scale functions
+    xScale = d3.scaleTime()
+      .domain([
+        d3.min(dataset, function(d) { return d.date; }),
+			  d3.max(dataset, function(d) { return d.date; })
+      ])
+      .range([padding, w]);
+
+    yScale = d3.scaleLinear()
+      .domain([0, d3.max(dataset, function(d) { return d.count; })])
+      .range([h - padding, 0]);
+
+    // Define axes
+    xAxis = d3.axisBottom().scale(xScale);
+
+    // Define Y axis
+    yAxis = d3.axisLeft().scale(yScale);
+
+    // Define line generator
+    line = d3.line()
+      .x(function(d) { return xScale(d.date); })
+      .y(function(d) { return yScale(d.count); });
+    
+    // Create SVG element
+    const svg = d3.select("body")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h);
+
+    // Create line
+    svg.append("path")
+      .datum(dataset)
+      .attr("class", "line")
+      .attr("d", line);
+
+    // Create axes
+    svg.append("g")
+      .attr("transform", "translate(0," + (h - padding) + ")")
+      .call(xAxis);
+
+    svg.append("g")
+      .attr("transform", "translate(" + padding + ",0)")
+      .call(yAxis);      
+  });
+    
+  </script>
+</body>
+
+</html>
