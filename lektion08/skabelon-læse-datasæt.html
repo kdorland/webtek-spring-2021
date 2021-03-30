@@ -1,0 +1,23 @@
+<html>
+<head>
+  <title>Datasæt læse-skabelon</title>
+  <script type="text/javascript" src="d3.js"></script>
+</head>
+
+<body>
+  <script type="text/javascript">
+    // Læs noget data med d3.js
+    d3.csv("./datasæt/north_america_bear_killings.csv").then(function(data) {
+
+      // Løb igennem data, og udskriv:
+      for (let d of data) {
+        console.log(d);
+      }
+
+      // Og det var det (kig i Chromes developer console)
+    })
+
+  </script>
+</body>
+
+</html>
