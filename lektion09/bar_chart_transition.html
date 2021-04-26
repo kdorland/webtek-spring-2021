@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Bar Chart Transition med farver</title>
+  <script type="text/javascript" src="d3.js"></script>
+  <style type="text/css">
+  </style>
+</head>
+
+<body>
+  <h1>Farvede søjler!</h1>
+
+  <label for="antal">Hvor mange nye elementer indsættes af gangen?</label>
+  <input type="number" id="antal_nye" name="vol" min="1" max="10" value="3">
+  <br/>
+  <label for="antal">Hvor mange nye elementer fjernes af gangen?</label>
+  <input type="number" id="antal_fjerne" name="vol" min="1" max="10" value="1">
+
+  <p id="klik_tilføj"><b>Klik her for at tilføje et element!</b></p>
+  <p id="klik_fjern"><b>Klik her for at fjerne et element!</b></p>
+
+  <script type="text/javascript">
+    const maxValue = 100;
+    function randomData(key) {
+      const color = "#"+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, "0");
+      const value = Math.floor(Math.random() * maxValue);
+      return {key, color, value};
+    }
+
+    // Width og height
+    const w = 600;
+    const h = 250;
+
+    const dataset = [];
+    for (let i = 0; i < 10; i++) {
+      dataset.push(randomData(i));
+    }
+
+    const xScale = d3.scaleBand()
+    .domain(d3.range(dataset.length))
+    .rangeRound([0, w])
+    .paddingInner(0.05);
+
+    const yScale = d3.scaleLinear()
+    .domain([0, maxValue])
+    .range([0, h]);
+
+    // Lav SVG element
+    const svg = d3.select("body")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h);
+
+    // Lave bars
+    svg.selectAll("rect")
+      .data(dataset, function(d) {
+        return d.key;
+      })
+      .enter()
+      .append("rect")
+      .attr("x", function (d, i) {
+        return xScale(i);
+      })
+      .attr("y", function (d) {
+        return h - yScale(d.value);
+      })
+      .attr("width", xScale.bandwidth())
+      .attr("height", function (d) {
+        return yScale(d.value);
+      })
+      .attr("fill", function (d) {
+        return d.color;
+      });
+
+    // Vælg elementet med id "klik_tilføj" og tilføj en handling		
+    d3.select("#klik_tilføj")
+      .on("click", function () {
+        const antal = document.getElementById("antal_nye").value;
+        for (let i = 0; i < antal; i++) {
+          dataset.push(randomData(dataset.length + 1));
+        }
+
+        // Opdater scales
+        xScale.domain(d3.range(dataset.length));
+        yScale.domain([0, maxValue]);	// Strengt taget ikke nødvendig her
+        
+        // select
+        const updateSelection = svg.selectAll("rect")
+          .data(dataset, function(d) {
+            return d.key;
+          });
+
+        // enter
+        updateSelection.enter()								
+          .append("rect")
+          .attr("x", w)
+          .attr("y", function (d) {
+            return h - yScale(d.value);
+          })
+          .attr("width", xScale.bandwidth())
+          .attr("height", function (d) {
+            return yScale(d.value);
+          })
+          .attr("fill", function(d) {
+            return d.color;
+          })
+          .merge(updateSelection)
+          .transition()
+          .duration(1500)
+          .attr("x", function(d, i) {
+            return xScale(i);
+          })
+          .attr("y", function(d) {
+            return h - yScale(d.value);
+          })
+          .attr("width", xScale.bandwidth())
+          .attr("height", function(d) {
+            return yScale(d.value);
+          });  
+      });
+
+    // Vælg elementet med id "klik_fjern" og tilføj en handling		
+    d3.select("#klik_fjern")
+      .on("click", function () {
+        const antal = document.getElementById("antal_fjerne").value;
+        console.log("antal", antal);
+        for (let i = 0; i < antal; i++) {
+          dataset.pop(); // Fjern sidste element
+        }        
+        
+        // Opdater scales
+        xScale.domain(d3.range(dataset.length));
+        yScale.domain([0, maxValue]);	// Strengt taget ikke nødvendig her
+        
+        // select
+        const updateSelection = svg.selectAll("rect")
+          .data(dataset, function(d) {
+            return d.key;
+          });
+
+        // enter
+        updateSelection.enter()								
+          .append("rect")
+          .attr("x", w)
+          .attr("y", function (d) {
+            return h - yScale(d.value);
+          })
+          .attr("width", xScale.bandwidth())
+          .attr("height", function (d) {
+            return yScale(d.value);
+          })
+          .attr("fill", function(d) {
+            return d.color;
+          })
+          .merge(updateSelection)
+          .transition()
+          .duration(1500)
+          .attr("x", function(d, i) {
+            return xScale(i);
+          })
+          .attr("y", function(d) {
+            return h - yScale(d.value);
+          })
+          .attr("width", xScale.bandwidth())
+          .attr("height", function(d) {
+            return yScale(d.value);
+          });  
+
+        // exit
+				updateSelection.exit()
+          .transition()
+          .duration(1500)
+          .attr("x", w)
+          .remove();
+      });
+  </script>
+</body>
+
+</html>
