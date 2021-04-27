@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <title>d3.js barchart med scale og labels</title>
+    <script type="text/javascript" src="d3.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        d3.csv("seats-held-by-women-in-parliament.csv").then(function(data) {
+            const danmark = data[5];
+            const tyskland = data[6];
+            console.log(danmark);
+
+            let opsamling = [];
+
+            for (let i = 2003; i <= 2019; i++) {
+                let datapunkt = [
+                    parseFloat(danmark[i]),
+                    parseFloat(tyskland[i]),
+                ]
+
+                opsamling.push(datapunkt);
+            }
+
+            console.log("opsamling", opsamling);
+        })
+    </script>
+</body>
+
+</html>
