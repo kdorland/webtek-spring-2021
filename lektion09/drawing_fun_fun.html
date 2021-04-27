@@ -12,6 +12,9 @@
 <body>
   <h1>Drawing Fun Fun!</h1>
 
+  <label for="paintColor">Vælg din farve:</label>
+  <input type="color" id="paintColor" name="paintColor" value="#ff0000"><br><br>
+
   <script type="text/javascript">
     // Width og height
     const w = 250;
@@ -73,7 +76,8 @@
         return d;
       })
       .on("click", function(d) {
-        console.log("click color:", this.getAttribute("fill"));
+        console.log("Du klikkede på farven:", this.getAttribute("fill"));
+        console.log("Den valgte farve fra input er:", document.getElementById("paintColor").value);
       });
   </script>
 </body>
