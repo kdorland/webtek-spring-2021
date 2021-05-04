@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Bar Chart Transition med farver</title>
+  <script type="text/javascript" src="d3.js"></script>
+  <style type="text/css">
+  </style>
+</head>
+
+<body>
+  <h1>Drawing Fun Fun!</h1>
+
+  <label for="paintColor">Vælg din farve:</label>
+  <input type="color" id="paintColor" name="paintColor" value="#ff0000"><br><br>
+
+  <script type="text/javascript">
+    // Width og height
+    const w = 250;
+    const h = 250;
+
+    const dataset = []
+    for (let y = 0; y < 15; y++) {
+      dataset[y] = []; // Tom række
+      for (let x = 0; x < 15; x++) {
+        if (x === 0 || x === 14 || y === 0 || y === 14) {
+          dataset[y].push("red");
+        } else {
+          dataset[y].push("green");
+        }
+      }
+    }
+    console.log(dataset);
+
+    const xScale = d3.scaleBand()
+    .domain(d3.range(dataset[0].length))
+    .rangeRound([0, w]);
+
+    // Magen til xScale når w = h
+    const yScale = d3.scaleBand()
+    .domain(d3.range(dataset.length))
+    .rangeRound([0, h]);
+
+    // Lav SVG element
+    const svg = d3.select("body")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h);
+
+    // Lave en række
+    const row = svg.selectAll(".row")
+      .data(dataset)
+      .enter().append("g")
+      .attr("class", "row")
+      // Smart trick til lige at gemme rækkens index på <g>-elementet
+      .attr("data-index", function(d, i) { return i; })
+      ;
+
+    const column = row.selectAll("rect")
+      .data(function(d) {
+        return d; 
+      })
+      .enter()
+      .append("rect")
+      .attr("x", function (d, i) {
+        return xScale(i);
+      })
+      .attr("y", function (d, i) {
+        // Og henter henter vi rækkens index 
+        const j = this.parentNode.getAttribute("data-index");
+        return yScale(parseInt(j));
+      })
+      .attr("width", xScale.bandwidth())
+      .attr("height", yScale.bandwidth())
+      .attr("fill", function (d) {
+        return d;
+      })
+      .on("click", function(d) {
+        console.log("Du klikkede på farven:", this.getAttribute("fill"));
+        console.log("Den valgte farve fra input er:", document.getElementById("paintColor").value);
+        const color = document.getElementById("paintColor").value;
+
+        d3.select(this)
+          .attr("fill", color)
+      });
+  </script>
+</body>
+
+</html>
