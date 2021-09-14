@@ -47,7 +47,15 @@
       .attr("height", function (d) {
         return yScale(d);
       })
-      .attr("fill", "teal");
+      .attr("fill", "teal")
+    ;
+
+      svg.append("text")
+      .text("hejsa")
+      .attr("x", 100)
+      .attr("y", 100)
+      ;
+
 
     // Lave x-akse med tal
     const xAxis = d3.axisBottom().scale(xScale);
